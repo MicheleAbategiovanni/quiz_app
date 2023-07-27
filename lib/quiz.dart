@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/question_screen.dart';
 import 'package:quiz_app/quiz_start.dart';
+import 'package:quiz_app/data/questions.dart';
+import 'package:quiz_app/result_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -12,7 +14,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  // Widget? activeScreen;
+  Widget? screenWidget;
 
   // @override
   // void initState() {
@@ -21,6 +23,7 @@ class _QuizState extends State<Quiz> {
   // }
 
   var activeScreen = 'start-screen';
+  List<String> selectedAnswers = [];
 
   void switchScreen() {
     setState(() {
@@ -29,17 +32,41 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = 'result-screen';
+        selectedAnswers = [];
+      });
+    }
+
+    //Controlliamo se effettivamente stiamo aggiungendo le risposte nell'array
+    // print(selectedAnswers);
+  }
+
   @override
   Widget build(BuildContext context) {
+    screenWidget = QuizStart(switchScreen);
+
+    if (activeScreen == 'question-screen') {
+      screenWidget = QuestionScreen(
+        onSelectedAnswer: chooseAnswer,
+      );
+    }
+
+    if (activeScreen == 'result-screen') {
+      screenWidget = const ResultScreen();
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
             color: Colors.deepPurpleAccent,
           ),
-          child: activeScreen == 'start-screen'
-              ? QuizStart(switchScreen)
-              : const QuestionScreen(),
+          child: screenWidget,
         ),
       ),
     );
