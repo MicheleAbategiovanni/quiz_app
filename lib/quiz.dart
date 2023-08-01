@@ -38,12 +38,17 @@ class _QuizState extends State<Quiz> {
     if (selectedAnswers.length == questions.length) {
       setState(() {
         activeScreen = 'result-screen';
-        selectedAnswers = [];
       });
     }
-
     //Controlliamo se effettivamente stiamo aggiungendo le risposte nell'array
     // print(selectedAnswers);
+  }
+
+  void onRestartQuiz() {
+    setState(() {
+      selectedAnswers = [];
+      activeScreen = 'question-screen';
+    });
   }
 
   @override
@@ -57,7 +62,10 @@ class _QuizState extends State<Quiz> {
     }
 
     if (activeScreen == 'result-screen') {
-      screenWidget = const ResultScreen();
+      screenWidget = ResultScreen(
+        choseAnswers: selectedAnswers,
+        onRestartQuiz: onRestartQuiz,
+      );
     }
 
     return MaterialApp(
