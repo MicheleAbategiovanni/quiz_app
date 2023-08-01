@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QuestionNumber extends StatelessWidget {
-  QuestionNumber({
+  const QuestionNumber({
     super.key,
     required this.question,
     required this.isCorrectAnswer,
