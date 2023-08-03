@@ -4,11 +4,16 @@ import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/questions-summary/questions_summary.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen(
-      {super.key, required this.choseAnswers, required this.onRestartQuiz});
+  const ResultScreen({
+    super.key,
+    required this.choseAnswers,
+    required this.onRestartQuiz,
+    required this.onHomeQuiz,
+  });
 
   final List<String> choseAnswers;
   final void Function() onRestartQuiz;
+  final void Function() onHomeQuiz;
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -55,17 +60,32 @@ class ResultScreen extends StatelessWidget {
             const SizedBox(height: 30),
             QuestionSummary(summaryData),
             const SizedBox(height: 30),
-            TextButton.icon(
-              onPressed: () {
-                onRestartQuiz();
-              },
-              label: const Text('Restart Quiz !'),
-              icon: const Icon(
-                Icons.refresh_sharp,
-              ),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton.icon(
+                  onPressed: onHomeQuiz,
+                  label: const Text('Go Home !'),
+                  icon: const Icon(
+                    Icons.home,
+                  ),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    onRestartQuiz();
+                  },
+                  label: const Text('Restart Quiz !'),
+                  icon: const Icon(
+                    Icons.refresh_sharp,
+                  ),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
