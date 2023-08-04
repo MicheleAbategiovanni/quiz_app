@@ -2,6 +2,10 @@
 
 <br>
 
+<div align="center">
+<img src="screen.gif" width="200" alt="gif quiz app"></a>
+</div>
+
 
 # Quiz App ~ Flutter 
 
